@@ -1,11 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>sheesh</title>
+<title>bliss</title>
 </head>
-
+  <h1 id="myP">Hello.</h1>
+  <h2>You have reached enlightenment.</h2>
+  <h3>Welcome to bliss.</h3>
 <body>
-
+  <p>Breathe and take a moment to enjoy life.</p>
+  <button onclick="myFunction()">Click Me</button>
 </body>
 
 </html>
+<script type="text/javascript">
+  function myFunction() {
+  var x = document.getElementById("myP");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+</script>
