@@ -1,24 +1,6 @@
-idk.getElementById("myP).style.display = "none";
 <style>
-  link {
-    color: #0099FF;
-  }
-  a, a:link, a:visited {
-    color: #0099FF;
-    text-decoration: none;
-  }
-  a:hover {
-    color: #FF9933;
-    background-color: #0099FF;
-  }
-  body {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 50x;
-    vertical-align: bottom;
-    color: #505050;
-  }
-  hr{
-    padding: 0px;
-    margin: 0px;    
-  }
+
+h1 {
+	display: hidden;
+}
 </style>
