@@ -1,4 +1,7 @@
 function showText () {
+  button {
+    opacity:0;
+  }
 setTimeout(function() {
   h1 {
     opacity:100;
