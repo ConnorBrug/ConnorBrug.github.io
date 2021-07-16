@@ -1,11 +1,18 @@
-<style>
-  body {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 50x;
-    vertical-align: bottom;
-    color: #505050;
+div {
+  opacity:0;
+}
+setTimeout(function() {
+  h1 {
+    opacity:100
   }
-  h3{
-	  opacity:0;
+setTimeout(function() {
+  h2 {
+    opacity:100
   }
-</style>
+setTimeout(function() {
+  h3 {
+    opacity:100
+  }
+}, 1000);
+}, 1000);
+}, 1000);
