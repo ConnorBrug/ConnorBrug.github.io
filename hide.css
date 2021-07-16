@@ -1,6 +1,9 @@
 <style>
 
 h1 {
-	visibility:hidden
+	visibility:hidden;
+}
+h2 {
+	display:none;
 }
 </style>
