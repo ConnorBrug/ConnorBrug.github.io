@@ -1,6 +1,6 @@
 var myButton = document.getElementById( 'showButton' ); 
 myButton.addEventListener( 'click', showText() );
 function showText() {
-  showButton {
+ myButton {
     opacity:0;
   }
