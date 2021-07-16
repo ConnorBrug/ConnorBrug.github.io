@@ -1,8 +1,11 @@
+  
 function showText() {
   p {
     opacity:0;
+  }
   h1 {
     opacity:100;
+  }
   button {
     opacity:0;
   }
