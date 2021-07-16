@@ -5,6 +5,7 @@
   <h1 id="first">Hello.</h1>
   <h2 id="second">You have reached enlightenment.</h2>
   <h3 id="third">Welcome to bliss.</h3>
+  <p id="fouth">Breathe and take a moment to enjoy life.</p>
   <style>
 div {
 visibility:hidden;
@@ -18,6 +19,9 @@ setTimeout(function() {
 document.getElementById("second").style.visibility = "visible";
 setTimeout(function() {
 document.getElementById("third").style.visibility = "visible";
+setTimeout(function() {
+document.getElementById("fourth").style.visibility = "visible";
+}, 3000);
 }, 3000);
 }, 3000);
 }, 3000);
@@ -25,5 +29,4 @@ document.getElementById("third").style.visibility = "visible";
 </script>
   </div>
   <iframe width="0" height="0" src="https://www.youtube.com/embed/2OEL4P1Rz04?controls=0&autoplay=1&loop=1&startat=20" allow="autoplay" onload="showText()"></iframe>
-  <p>Breathe and take a moment to enjoy life.</p>
 </html>
