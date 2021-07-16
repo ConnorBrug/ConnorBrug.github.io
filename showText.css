@@ -1,5 +1,5 @@
 function showText() {
-  input {
+  p {
     opacity:0;
   h1 {
     opacity:100;
