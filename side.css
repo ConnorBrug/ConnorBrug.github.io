@@ -1,6 +1,7 @@
 div {
   opacity:0;
 }
+function showText () {
 setTimeout(function() {
   h1 {
     opacity:100;
@@ -16,3 +17,4 @@ setTimeout(function() {
 }, 1000);
 }, 1000);
 }, 1000);
+}
