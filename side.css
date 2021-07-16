@@ -3,15 +3,15 @@ div {
 }
 setTimeout(function() {
   h1 {
-    opacity:100
+    opacity:100;
   }
 setTimeout(function() {
   h2 {
-    opacity:100
+    opacity:100;
   }
 setTimeout(function() {
   h3 {
-    opacity:100
+    opacity:100;
   }
 }, 1000);
 }, 1000);
