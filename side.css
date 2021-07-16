@@ -1,20 +1,3 @@
 div {
   opacity:0;
 }
-function showText () {
-setTimeout(function() {
-  h1 {
-    opacity:100;
-  }
-setTimeout(function() {
-  h2 {
-    opacity:100;
-  }
-setTimeout(function() {
-  h3 {
-    opacity:100;
-  }
-}, 1000);
-}, 1000);
-}, 1000);
-}
