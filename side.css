@@ -1,1 +1,3 @@
-document.getElementById("sheesh").style.visibility = "hidden";
+div {
+  visibility:"hidden";
+}
