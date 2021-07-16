@@ -1,4 +1,6 @@
 function showText() {
+  input {
+    opacity:0;
   h1 {
     opacity:100;
   button {
