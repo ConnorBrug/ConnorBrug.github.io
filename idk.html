@@ -3,8 +3,23 @@
 <head>
 <title>bliss</title>
 <link rel="stylesheet" href="side.css">
-<link rel="stylesheet" href="showText.css">
-<script type = "text/javascript" src="showText.css"></script>  
+<script type = "text/javascript" src="showText.css"></script>
+<style>
+  setTimeout(function(){
+  showText();
+}, 2000;
+function showText() {
+setTimeout(function() {
+document.getElementById("first").style.visibility = "visible";
+setTimeout(function() {
+document.getElementById("second").style.visibility = "visible";
+setTimeout(function() {
+document.getElementById("third").style.visibility = "visible";
+}, 3000);
+}, 3000);
+}, 3000);
+}
+  </style>
 <div id="sheesh">
   <h1 id="first">Hello.</h1>
   <h2 id="second">You have reached enlightenment.</h2>
