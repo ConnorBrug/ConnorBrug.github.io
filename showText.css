@@ -1,5 +1,4 @@
-  
-function showText() {
+  function showText() {
   p {
     opacity:0;
   }
