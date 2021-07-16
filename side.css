@@ -1,4 +1,3 @@
-div = document.getElementById("sheesh")
 div {
   visibility: hidden;
 }
