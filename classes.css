@@ -72,7 +72,3 @@ a.button {
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s
 }
-.videoScale {
-  width: 40%;
-  float: left;
-}
