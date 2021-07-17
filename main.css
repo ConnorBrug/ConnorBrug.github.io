@@ -14,6 +14,7 @@ h1 {
 }
 body {
     background-image: url("gorilla.png");
+    background-repeat: repeat-x;
     background-color:#FFFFFF;
     margin:0;
     padding:0;
