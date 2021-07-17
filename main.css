@@ -1,12 +1,12 @@
 <style>
 *, html {
-    margin:2;
+    margin:5;
     padding:0;  
 }
 h1 {
   font-size:120px;
   line-height:0.7em;
-  margin:0;
+  margin-top:5;
   padding:0;
 }
 body {
