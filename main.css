@@ -1,12 +1,9 @@
 <style>
-*, html {
-    margin:0;
-    padding:0;  
-}
 h1 {
   font-size:120px;
   line-height:0.7em;
-  margin-top:0;
+  margin:0;
+  padding:0;
 }
 body {
     background-image: url(https://lh3.googleusercontent.com/proxy/ZUhxCw4kHCk1DKwC8pmi9vVbf5uLaK7JyujqPHnbgjLj7xmZMtzZo4F8mjYilmRBhYqaRiXY8MwHrPbFvghwOwhEGzovO37KSDQQVfJkq1EVN4AtziZ933lZIag);
