@@ -1,2 +1,2 @@
 var vid = document.getElementById("bruh");
-vid.volume = 0.1;
+vid.volume = 0.0;
