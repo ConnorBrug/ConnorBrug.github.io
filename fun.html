@@ -17,7 +17,7 @@ setTimeout(function() {
 document.getElementById("safe").style.fontSize = "60px";
 document.getElementById("bruh").style.display = "none";
 }, 5000);
-}, 1000);
+}, 100);
 }
 </script>
     <style> 
@@ -35,7 +35,7 @@ div {
      <p id="safe">RETREAT. <br><br><a style="color:white" href="idk.html">LEAVE</a>.</p>
   </div>
   <div id="bruh">
-      <video width="20%" autoplay loop> <source src="spoonVideo.mp4" type="video/mp4"> </video>
+      <video onload="showSafe()" width="20%" autoplay loop> <source src="spoonVideo.mp4" type="video/mp4"> </video>
       <video width="20%" autoplay loop> <source src="spoonVideo.mp4" type="video/mp4"> </video>
       <video width="20%" autoplay loop> <source src="spoonVideo.mp4" type="video/mp4"> </video>
       <video width="20%" autoplay loop> <source src="spoonVideo.mp4" type="video/mp4"> </video>
