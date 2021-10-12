@@ -1,0 +1,361 @@
+<html>
+<head>
+<title>gameDisplay.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #6a8759;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+gameDisplay.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">arrowGame</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.awt.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.awt.event.KeyEvent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.awt.event.KeyListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.swing.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.swing.JLabel</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Timer</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.TimerTask</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.lang.Math</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.io.*</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">gameDisplay {</span>
+    <span class="s0">int </span><span class="s1">highestScore = </span><span class="s2">0</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">randomNumDown = </span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">randomNumUp = </span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">randomNumLeft = </span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">randomNumRight = </span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">min = </span><span class="s2">1</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">max = </span><span class="s2">4</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">score = </span><span class="s2">0</span><span class="s0">;</span>
+    <span class="s0">boolean </span><span class="s1">pause = </span><span class="s0">false;</span>
+    <span class="s0">private </span><span class="s1">JPanel mainPanel</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel downArrow</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel upArrow</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel leftArrow</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel rightArrow</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel downArrowTransparent</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel upArrowTransparent</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel leftArrowTransparent</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel rightArrowTransparent</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JLabel deadZone</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JTextField scoreDisplay</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JTextField highScoreDisplay</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JPanel backgroundPanel</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JTextField backgroundScore</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JPanel backgroundPanelTwo</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">JTextField backgroundScoreTwo</span><span class="s0">;</span>
+    <span class="s1">Timer myTimer = </span><span class="s0">new </span><span class="s1">Timer()</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">downStartingPositionY = downArrow.getY()</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">upStartingPositionY = upArrow.getY()</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">leftStartingPositionY = leftArrow.getY()</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">rightStartingPositionY = rightArrow.getY()</span><span class="s0">;</span>
+
+    <span class="s0">public static void </span><span class="s1">start(){</span>
+        <span class="s1">Toolkit t = Toolkit.getDefaultToolkit()</span><span class="s0">;</span>
+        <span class="s1">JFrame frame = </span><span class="s0">new </span><span class="s1">JFrame(</span><span class="s3">&quot;gameDisplay&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">frame.setContentPane(</span><span class="s0">new </span><span class="s1">gameDisplay().mainPanel)</span><span class="s0">;</span>
+        <span class="s1">frame.pack()</span><span class="s0">;</span>
+        <span class="s1">frame.setSize(frame.getWidth()</span><span class="s0">,</span><span class="s1">t.getScreenSize().height)</span><span class="s0">;</span>
+        <span class="s1">frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)</span><span class="s0">;</span>
+        <span class="s1">frame.setVisible(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public </span><span class="s1">gameDisplay(){</span>
+        <span class="s1">startGame()</span><span class="s0">;</span>
+        <span class="s1">formatScreen()</span><span class="s0">;</span>
+        <span class="s1">scaleImage()</span><span class="s0">;</span>
+        <span class="s1">moveArrows()</span><span class="s0">;</span>
+        <span class="s1">score()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">formatScreen(){</span>
+        <span class="s1">highScoreDisplay.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.PLAIN</span><span class="s0">, </span><span class="s2">30</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">scoreDisplay.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.PLAIN</span><span class="s0">, </span><span class="s2">30</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">highScoreDisplay.setSize(</span><span class="s2">50</span><span class="s0">,</span><span class="s2">100</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">scoreDisplay.setSize(</span><span class="s2">50</span><span class="s0">,</span><span class="s2">100</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">backgroundScore.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.BOLD</span><span class="s0">, </span><span class="s2">100</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">backgroundPanel.setOpaque(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">backgroundScoreTwo.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.BOLD</span><span class="s0">, </span><span class="s2">100</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">backgroundPanelTwo.setOpaque(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mainPanel.setFocusable(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mainPanel.requestFocusInWindow()</span><span class="s0">;</span>
+        <span class="s1">mainPanel.addKeyListener(</span><span class="s0">new </span><span class="s1">myListener())</span><span class="s0">;</span>
+        <span class="s1">backgroundPanel.addKeyListener(</span><span class="s0">new </span><span class="s1">myListener())</span><span class="s0">;</span>
+        <span class="s1">backgroundPanelTwo.addKeyListener(</span><span class="s0">new </span><span class="s1">myListener())</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">scaleImage(){</span>
+        <span class="s1">ImageIcon icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/downArrow.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">Image img = icon.getImage()</span><span class="s0">;</span>
+        <span class="s1">Image imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+        <span class="s1">ImageIcon scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">downArrow.setIcon(scaledIcon)</span><span class="s0">;</span>
+         <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/upArrow.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+         <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+         <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+         <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">upArrow.setIcon(scaledIcon)</span><span class="s0">;</span>
+         <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/leftArrow.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+         <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+         <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+         <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">leftArrow.setIcon(scaledIcon)</span><span class="s0">;</span>
+        <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/rightArrow.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+         <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+         <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+         <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">rightArrow.setIcon(scaledIcon)</span><span class="s0">;</span>
+         <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/downArrowTransparent.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+         <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+         <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+         <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">downArrowTransparent.setIcon(scaledIcon)</span><span class="s0">;</span>
+        <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/upArrowTransparent.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+        <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+        <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">upArrowTransparent.setIcon(scaledIcon)</span><span class="s0">;</span>
+        <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/leftArrowTransparent.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+        <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+        <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">leftArrowTransparent.setIcon(scaledIcon)</span><span class="s0">;</span>
+        <span class="s1">icon = </span><span class="s0">new </span><span class="s1">ImageIcon(</span><span class="s3">&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/rightArrowTransparent.png&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">img = icon.getImage()</span><span class="s0">;</span>
+        <span class="s1">imgScale = img.getScaledInstance(</span><span class="s2">200</span><span class="s0">,</span><span class="s2">200</span><span class="s0">, </span><span class="s1">Image.SCALE_SMOOTH)</span><span class="s0">;</span>
+        <span class="s1">scaledIcon = </span><span class="s0">new </span><span class="s1">ImageIcon(imgScale)</span><span class="s0">;</span>
+        <span class="s1">rightArrowTransparent.setIcon(scaledIcon)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">startGame() {</span>
+        <span class="s0">int </span><span class="s1">downPositionX = downArrowTransparent.getX()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">upPositionX = upArrowTransparent.getX()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">leftPositionX = leftArrowTransparent.getX()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">rightPositionX = rightArrowTransparent.getX()</span><span class="s0">;</span>
+        <span class="s1">downArrow.setLocation(downPositionX</span><span class="s0">, </span><span class="s1">downStartingPositionY-</span><span class="s2">500</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">upArrow.setLocation(upPositionX</span><span class="s0">, </span><span class="s1">upStartingPositionY-</span><span class="s2">500</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">leftArrow.setLocation(leftPositionX</span><span class="s0">, </span><span class="s1">leftStartingPositionY-</span><span class="s2">500</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">rightArrow.setLocation(rightPositionX</span><span class="s0">, </span><span class="s1">rightStartingPositionY-</span><span class="s2">500</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">endGame(){</span>
+        <span class="s1">System.out.println(</span><span class="s3">&quot;Thanks for playing&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">myTimer.cancel()</span><span class="s0">;</span>
+        <span class="s1">JFrame endFrame = </span><span class="s0">new </span><span class="s1">JFrame()</span><span class="s0">;</span>
+        <span class="s1">JPanel gameOver = </span><span class="s0">new </span><span class="s1">JPanel()</span><span class="s0">;</span>
+        <span class="s1">JLabel diedLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;YOU DIED&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">diedLabel.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.BOLD</span><span class="s0">, </span><span class="s2">50</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">JLabel highscoreLabel = </span><span class="s0">new </span><span class="s1">JLabel(</span><span class="s3">&quot;Your highscore was &quot; </span><span class="s1">+ highestScore)</span><span class="s0">;</span>
+        <span class="s1">highscoreLabel.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.PLAIN</span><span class="s0">, </span><span class="s2">30</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">JButton tryAgain = </span><span class="s0">new </span><span class="s1">JButton(</span><span class="s3">&quot;Try Again&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">tryAgain.setFont(</span><span class="s0">new </span><span class="s1">Font(</span><span class="s3">&quot;Serif&quot;</span><span class="s0">, </span><span class="s1">Font.PLAIN</span><span class="s0">, </span><span class="s2">50</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">gameOver.add(diedLabel)</span><span class="s0">;</span>
+        <span class="s1">gameOver.add(Box.createHorizontalStrut(</span><span class="s2">10</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">gameOver.add(highscoreLabel)</span><span class="s0">;</span>
+        <span class="s1">gameOver.add(Box.createHorizontalStrut(</span><span class="s2">10</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">gameOver.add(tryAgain)</span><span class="s0">;</span>
+        <span class="s1">gameOver.setLayout(</span><span class="s0">new </span><span class="s1">BoxLayout(gameOver</span><span class="s0">, </span><span class="s1">BoxLayout.Y_AXIS))</span><span class="s0">;</span>
+        <span class="s1">endFrame.add(gameOver)</span><span class="s0">;</span>
+        <span class="s1">endFrame.setContentPane(gameOver)</span><span class="s0">;</span>
+        <span class="s1">tryAgain.addActionListener(e -&gt; {</span>
+            <span class="s1">endFrame.dispose()</span><span class="s0">;</span>
+            <span class="s1">startGame()</span><span class="s0">;</span>
+            <span class="s1">randomNumDown = </span><span class="s2">1</span><span class="s0">;</span>
+            <span class="s1">randomNumUp = </span><span class="s2">1</span><span class="s0">;</span>
+            <span class="s1">randomNumLeft = </span><span class="s2">1</span><span class="s0">;</span>
+            <span class="s1">randomNumRight = </span><span class="s2">1</span><span class="s0">;</span>
+            <span class="s1">min = </span><span class="s2">1</span><span class="s0">;</span>
+            <span class="s1">max = </span><span class="s2">4</span><span class="s0">;</span>
+            <span class="s1">score = </span><span class="s2">0</span><span class="s0">;</span>
+            <span class="s1">myTimer = </span><span class="s0">new </span><span class="s1">Timer()</span><span class="s0">;</span>
+            <span class="s1">moveArrows()</span><span class="s0">;</span>
+        <span class="s1">})</span><span class="s0">;</span>
+        <span class="s1">endFrame.pack()</span><span class="s0">;</span>
+        <span class="s1">endFrame.setSize(</span><span class="s2">300</span><span class="s0">,</span><span class="s2">400</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">endFrame.setVisible(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">pauseGame(){</span>
+        <span class="s1">pause = !pause</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(pause) {</span>
+            <span class="s1">myTimer.cancel()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">myTimer = </span><span class="s0">new </span><span class="s1">Timer()</span><span class="s0">;</span>
+            <span class="s1">moveArrows()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">score() {</span>
+        <span class="s0">if </span><span class="s1">((score%</span><span class="s2">50 </span><span class="s1">== </span><span class="s2">0</span><span class="s1">) &amp;&amp; (score &gt; </span><span class="s2">100</span><span class="s1">)) {</span>
+            <span class="s0">if </span><span class="s1">(score &gt; </span><span class="s2">100</span><span class="s1">) {</span>
+                <span class="s1">max = (score / </span><span class="s2">50</span><span class="s1">) + </span><span class="s2">3</span><span class="s0">;</span>
+                <span class="s1">min = (score / </span><span class="s2">50</span><span class="s1">) -</span><span class="s2">1</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+        <span class="s0">if </span><span class="s1">(score &gt; -</span><span class="s2">1</span><span class="s1">) {</span>
+            <span class="s1">highScoreDisplay.setText(</span><span class="s3">&quot;Highscore: &quot; </span><span class="s1">+ highestScore)</span><span class="s0">;</span>
+            <span class="s1">scoreDisplay.setText(</span><span class="s3">&quot;Score: &quot; </span><span class="s1">+ score)</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(score &lt; </span><span class="s2">100</span><span class="s1">) {</span>
+                <span class="s1">backgroundScore.setText(</span><span class="s3">&quot;0&quot;</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">backgroundScoreTwo.setText(String.valueOf(score))</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s0">char</span><span class="s1">[] scoreArr = String.valueOf(score).toCharArray()</span><span class="s0">;</span>
+                <span class="s1">backgroundScore.setText(String.valueOf(scoreArr[</span><span class="s2">0</span><span class="s1">]))</span><span class="s0">;</span>
+                <span class="s1">backgroundScoreTwo.setText(String.valueOf(scoreArr[</span><span class="s2">1</span><span class="s1">])+String.valueOf(scoreArr[</span><span class="s2">2</span><span class="s1">]))</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">endGame()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">checkHighestScore(){</span>
+        <span class="s0">if </span><span class="s1">(score &gt; highestScore){</span>
+            <span class="s1">highestScore = score</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">checkLocation(){</span>
+        <span class="s0">int </span><span class="s1">deadZoneY = deadZone.getY()</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(downArrow.getY() &gt; deadZoneY){</span>
+            <span class="s1">downArrow.setLocation(downArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+            <span class="s1">score--</span><span class="s0">;</span>
+            <span class="s1">score()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(upArrow.getY() &gt; deadZoneY){</span>
+            <span class="s1">upArrow.setLocation(upArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+            <span class="s1">score--</span><span class="s0">;</span>
+            <span class="s1">score()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(leftArrow.getY() &gt; deadZoneY){</span>
+            <span class="s1">leftArrow.setLocation(leftArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+            <span class="s1">score--</span><span class="s0">;</span>
+            <span class="s1">score()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else if </span><span class="s1">(rightArrow.getY() &gt; deadZoneY) {</span>
+            <span class="s1">rightArrow.setLocation(rightArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+            <span class="s1">score--</span><span class="s0">;</span>
+            <span class="s1">score()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">moveArrows() {</span>
+        <span class="s1">myTimer.schedule(</span><span class="s0">new </span><span class="s1">TimerTask() {</span>
+            <span class="s0">public void </span><span class="s1">run()  {</span>
+                <span class="s1">checkLocation()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">downPositionX = downArrowTransparent.getX()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">upPositionX = upArrowTransparent.getX()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">leftPositionX = leftArrowTransparent.getX()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">rightPositionX = rightArrowTransparent.getX()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">downPositionY = downArrow.getY()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">upPositionY = upArrow.getY()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">leftPositionY = leftArrow.getY()</span><span class="s0">;</span>
+                <span class="s0">int </span><span class="s1">rightPositionY = rightArrow.getY()</span><span class="s0">;</span>
+                <span class="s1">downArrow.setLocation(downPositionX</span><span class="s0">, </span><span class="s1">downPositionY+randomNumDown)</span><span class="s0">;</span>
+                <span class="s1">upArrow.setLocation(upPositionX</span><span class="s0">, </span><span class="s1">upPositionY+randomNumUp)</span><span class="s0">;</span>
+                <span class="s1">leftArrow.setLocation(leftPositionX</span><span class="s0">, </span><span class="s1">leftPositionY+randomNumLeft)</span><span class="s0">;</span>
+                <span class="s1">rightArrow.setLocation(rightPositionX</span><span class="s0">, </span><span class="s1">rightPositionY+randomNumRight)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span><span class="s0">, </span><span class="s2">1</span><span class="s0">, </span><span class="s2">5</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s4">/* 
+    File f = new File(&quot;/Users/connorbrugger/Desktop/COMP SCI A/first day/Arrow keys/src/resources/correct.wav&quot;); 
+    public synchronized void playSound() { 
+        AudioInputStream audioIn = null; 
+        try { 
+            audioIn = AudioSystem.getAudioInputStream(f.toURI().toURL()); 
+        } catch (UnsupportedAudioFileException | IOException e) { 
+            e.printStackTrace(); 
+        } 
+        Clip clip = null; 
+        try { 
+            clip = AudioSystem.getClip(); 
+        } catch (LineUnavailableException e) { 
+            e.printStackTrace(); 
+        } 
+        try { 
+            assert clip != null; 
+            clip.open(audioIn); 
+        } catch (LineUnavailableException | IOException e) { 
+            e.printStackTrace(); 
+        } 
+        clip.stop(); 
+        clip.start(); 
+    } 
+     */</span>
+<span class="s0">class </span><span class="s1">myListener </span><span class="s0">implements </span><span class="s1">KeyListener {</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">keyTyped(KeyEvent e) {</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">keyPressed(KeyEvent e) {</span>
+        <span class="s0">int </span><span class="s1">downArrowTransparentY = downArrowTransparent.getY()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">upArrowTransparentY = upArrowTransparent.getY()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">leftArrowTransparentY = leftArrowTransparent.getY()</span><span class="s0">;</span>
+        <span class="s0">int </span><span class="s1">rightArrowTransparentY = rightArrowTransparent.getY()</span><span class="s0">;</span>
+        <span class="s0">switch </span><span class="s1">(e.getKeyCode()) {</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_DOWN:</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_S:</span>
+                <span class="s0">if </span><span class="s1">(downArrow.getY() &gt; downArrowTransparentY - </span><span class="s2">100 </span><span class="s1">&amp;&amp; downArrow.getY() &lt; downArrowTransparentY + </span><span class="s2">100</span><span class="s1">) {</span>
+                    <span class="s1">downArrow.setLocation(downArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">randomNumDown = (</span><span class="s0">int</span><span class="s1">) (Math.random() * (max - min + </span><span class="s2">1</span><span class="s1">) + min)</span><span class="s0">;</span>
+                    <span class="s1">score++</span><span class="s0">;</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                    <span class="s1">score--</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_UP:</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_W:</span>
+                <span class="s0">if </span><span class="s1">(upArrow.getY() &gt; upArrowTransparentY - </span><span class="s2">100 </span><span class="s1">&amp;&amp; upArrow.getY() &lt; upArrowTransparentY + </span><span class="s2">100</span><span class="s1">) {</span>
+                    <span class="s1">upArrow.setLocation(upArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">randomNumUp = (</span><span class="s0">int</span><span class="s1">) (Math.random() * (max - min + </span><span class="s2">1</span><span class="s1">) + min)</span><span class="s0">;</span>
+                    <span class="s1">score++</span><span class="s0">;</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                    <span class="s1">score--</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_LEFT:</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_A:</span>
+                <span class="s0">if </span><span class="s1">(leftArrow.getY() &gt; leftArrowTransparentY - </span><span class="s2">100 </span><span class="s1">&amp;&amp; leftArrow.getY() &lt; leftArrowTransparentY + </span><span class="s2">100</span><span class="s1">) {</span>
+                    <span class="s1">leftArrow.setLocation(leftArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">randomNumLeft = (</span><span class="s0">int</span><span class="s1">) (Math.random() * (max - min + </span><span class="s2">1</span><span class="s1">) + min)</span><span class="s0">;</span>
+                    <span class="s1">score++</span><span class="s0">;</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                    <span class="s1">score--</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_RIGHT:</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_D:</span>
+                <span class="s0">if </span><span class="s1">(rightArrow.getY() &gt; rightArrowTransparentY - </span><span class="s2">100 </span><span class="s1">&amp;&amp; rightArrow.getY() &lt; rightArrowTransparentY + </span><span class="s2">100</span><span class="s1">) {</span>
+                    <span class="s1">rightArrow.setLocation(rightArrow.getX()</span><span class="s0">, </span><span class="s1">-</span><span class="s2">200</span><span class="s1">)</span><span class="s0">;</span>
+                    <span class="s1">randomNumRight = (</span><span class="s0">int</span><span class="s1">) (Math.random() * (max - min + </span><span class="s2">1</span><span class="s1">) + min)</span><span class="s0">;</span>
+                    <span class="s1">score++</span><span class="s0">;</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">checkHighestScore()</span><span class="s0">;</span>
+                    <span class="s1">score--</span><span class="s0">;</span>
+                <span class="s1">}</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">KeyEvent.VK_ESCAPE:</span>
+                <span class="s1">pauseGame()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s1">score()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">keyReleased(KeyEvent e) {</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>
