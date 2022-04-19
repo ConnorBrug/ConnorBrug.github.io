@@ -8,6 +8,10 @@
 <link rel="stylesheet" href="death.css">
 <body class="center">
 <script type="text/javascript">
+          history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+          history.go(1);
+        };
 function showSafe() {
 document.getElementById("owo").style.fontSize = "small";
 setTimeout(function() {
