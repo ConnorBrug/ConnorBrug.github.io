@@ -8,7 +8,7 @@ setTimeout(function() {
 document.getElementById("second").style.visibility = "visible";
 setTimeout(function() {
 document.getElementById("third").style.visibility = "visible";
-}, 3000);
-}, 3000);
-}, 3000);
+}, 15000);
+}, 15000);
+}, 15000);
 }
