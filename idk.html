@@ -1,42 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="classes.css">
-<div id="sheesh">
-  <h1 id="first">Hello.</h1>
-  <h2 id="second">You have reached enlightenment.</h2>
-  <h3 id="third">Welcome to bliss.</h3>
-  <p id="fourth">Breathe and take a moment to enjoy life.</p>
-  <a id="home" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" class="button"><br><br><br><br>EXIT<br><br><br><br><br><<br></a>
+  <link rel="stylesheet" href="classes.css">
   <style>
-div {
-font-size:2.1875em;
-visibility:hidden;
-}
-</style>
-<script type="text/javascript">
-function showText() {
-document.getElementById("home").style.color = "#FFD700";
-setTimeout(function() {
-document.getElementById("first").style.visibility = "visible";
-setTimeout(function() {
-document.getElementById("second").style.visibility = "visible";
-setTimeout(function() {
-document.getElementById("third").style.visibility = "visible";
-setTimeout(function() {
-document.getElementById("fourth").style.visibility = "visible";
-setTimeout(function() {
-document.getElementById("home").style.visibility = "visible";
-}, 4000);
-}, 5000);
-}, 3000);
-}, 3000);
-}, 3000);
-}
-</script>
-  <div class="popup" onclick="myFunction()">Click me!
-  <span class="popuptext" id="myPopup">Popup text...</span>
-</div>
+    div {
+      font-size: 2.1875em;
+      visibility: hidden;
+    }
+  </style>
+  <script>
+    function showText() {
+      document.getElementById("home").style.color = "#FFD700";
+      setTimeout(function () {
+        document.getElementById("first").style.visibility = "visible";
+        setTimeout(function () {
+          document.getElementById("second").style.visibility = "visible";
+          setTimeout(function () {
+            document.getElementById("third").style.visibility = "visible";
+            setTimeout(function () {
+              document.getElementById("fourth").style.visibility = "visible";
+              setTimeout(function () {
+                document.getElementById("home").style.visibility = "visible";
+              }, 4000);
+            }, 5000);
+          }, 3000);
+        }, 3000);
+      }, 3000);
+    }
+  </script>
+</head>
+<body>
+  <div id="sheesh">
+    <h1 id="first">Hello.</h1>
+    <h2 id="second">You have reached enlightenment.</h2>
+    <h3 id="third">Welcome to bliss.</h3>
+    <p id="fourth">Breathe and take a moment to enjoy life.</p>
+    <a id="home" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" class="button">
+      <br><br><br><br>EXIT<br><br><br><br><br>&lt;<br>
+    </a>
   </div>
-  <iframe width="0" height="0" src="https://www.youtube.com/embed/2OEL4P1Rz04?controls=0&autoplay=1&loop=1&startat=20" allow="autoplay" onload="showText()"></iframe>
+
+  <div class="popup" onclick="myFunction()">
+    Click me!
+    <span class="popuptext" id="myPopup">Popup text...</span>
+  </div>
+
+  <iframe
+    width="0"
+    height="0"
+    src="https://www.youtube.com/embed/2OEL4P1Rz04?controls=0&autoplay=1&loop=1&startat=20"
+    allow="autoplay"
+    onload="showText()"
+  ></iframe>
+</body>
 </html>
